@@ -35,31 +35,31 @@ from jsonpatch import apply_patch
 from six import string_types
 
 test_data = {
-    'title': 'Back to the Future',
-    'year': 2015,
-    'stars': 4,
+    'title': 'Title1',
+    'description': 'Description1',
+    'notes': 'Notes1',
 }
 
 test_data2 = {
-    'title': 'Back to the Past',
-    'year': 2042,
-    'stars': 3,
+    'title': 'Title2',
+    'description': 'Description2',
+    'notes': 'Notes2',
 }
 
 test_data3 = {
-    'title': 'The Hitchhiker\'s Guide to the Galaxy',
-    'year': 1985,
-    'stars': 4,
+    'title': 'Title3',
+    'description': 'Description3',
+    'notes': 'Notes3',
 }
 
 test_data4 = {
-    'title': 'Unknown film',
-    'year': 4242,
-    'stars': 5,
+    'title': 'Title4',
+    'description': 'Description4',
+    'notes': 'Notes4',
 }
 
 test_patch = [
-    {'op': 'replace', 'path': '/year', 'value': 1985},
+    {'op': 'replace', 'path': '/description', 'value': 'Patched Description'},
 ]
 
 test_data_patched = apply_patch(test_data, test_patch)

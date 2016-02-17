@@ -60,7 +60,7 @@ from permissions import records_create_all, records_delete_all, \
     records_read_all, records_update_all
 
 
-@pytest.fixture()
+@pytest.yield_fixture()
 def app(request):
     """Flask application fixture."""
     instance_path = tempfile.mkdtemp()
@@ -105,6 +105,7 @@ def app(request):
     InvenioRecordsREST(app)
 
     with app.app_context():
+        # Setup app
         if not database_exists(str(db.engine.url)) and \
            app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite://':
             create_database(db.engine.url)
@@ -115,15 +116,19 @@ def app(request):
             current_search_client.indices.create(es_index)
         prepare_indexing(app)
 
-    def finalize():
-        with app.app_context():
-            db.drop_all()
-            if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite://':
-                drop_database(db.engine.url)
-            shutil.rmtree(instance_path)
+    with app.app_context():
+        # Yield app in request context
+        # with app.test_request_context():
+        with app.test_request_context():  # TODO: Move to app_request fixture
+            yield app
 
-    request.addfinalizer(finalize)
-    return app
+    with app.app_context():
+        # Yield app in request context
+        # Teardown app
+        db.drop_all()
+        if app.config['SQLALCHEMY_DATABASE_URI'] != 'sqlite://':
+            drop_database(db.engine.url)
+        shutil.rmtree(instance_path)
 
 
 @pytest.fixture()
@@ -151,7 +156,6 @@ def accounts(app):
 @pytest.yield_fixture
 def user_factory(app, accounts):
     """Create a user which has all permissions on every records."""
-
     password = '123456'
 
     with app.test_request_context():

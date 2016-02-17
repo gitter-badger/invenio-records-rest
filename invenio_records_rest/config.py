@@ -41,11 +41,15 @@ RECORDS_REST_ENDPOINTS = dict(
         search_type=None,
         record_serializers={
             'application/json': ('invenio_records_rest.serializers'
-                                 ':record_to_json_serializer'),
+                                 ':json_v1_response'),
+            'application/marc+xml': ('invenio_records_rest.serializers'
+                                     ':marcxml_v1_response'),
         },
         search_serializers={
             'application/json': ('invenio_records_rest.serializers'
-                                 ':search_to_json_serializer'),
+                                 ':json_v1_search'),
+            'application/marc+xml': ('invenio_records_rest.serializers'
+                                     ':marcxml_v1_search'),
         },
         list_route='/records/',
         item_route='/records/<pid_value>',

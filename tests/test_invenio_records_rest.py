@@ -265,6 +265,7 @@ def test_valid_get(app):
             res = client.get(url_for('invenio_records_rest.recid_item',
                                      pid_value=pid.pid_value),
                              headers=headers)
+            import ipdb; ipdb.set_trace()
             assert res.status_code == 200
             # check that the returned record matches the given data
             response_data = json.loads(res.get_data(as_text=True))
