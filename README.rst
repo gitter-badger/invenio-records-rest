@@ -47,3 +47,8 @@ REST API for invenio-records.
 
 * Free software: GPLv2 license
 * Documentation: https://pythonhosted.org/invenio-records-rest/
+
+
+.. image:: https://badges.gitter.im/krzysztof/invenio-records-rest.svg
+   :alt: Join the chat at https://gitter.im/krzysztof/invenio-records-rest
+   :target: https://gitter.im/krzysztof/invenio-records-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
